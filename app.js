@@ -32,28 +32,34 @@ const tasks = [
 ];
 
 (function(arrOfTasks) {
-  const objOfTask = arrOfTasks.reduce((acc, task) => {
+  const objOfTasks = arrOfTasks.reduce((acc, task) => {
     acc[task._id] = task;
     return acc;
-  }, {})
+  }, {});
 
-  renderAllTasks(objOfTask);
+  const listContainer = document.querySelector('.task-list-section .list-group');
 
-  function renderAllTasks(taskList) {
-    if(!taskList) {
+  renderAllTasks(objOfTasks);
+
+  function renderAllTasks(tasksList) {
+    if(!tasksList) {
       console.error('Передайте список задач!');
       return;
     }
 
     const fragment = document.createDocumentFragment();
-    Object.values(taskList).forEach(task => {
-      const li = listItemTemplate(task)
+    Object.values(tasksList).forEach(task => {
+      const li = listItemTemplate(task);
+      fragment.appendChild(li);
     });
 
-    function listItemTemplate({_id, title, body} = {}) {
-      const li = document.createElement('li');
-      li.classList.add('list-group-item', 'd-flex', 'align-items-center', 'flex-wrap', 'mt-2');
-    }
+    listContainer.appendChild(fragment);
+  }
+
+  function listItemTemplate({ _id, title, body } = {}) {
+    const li = document.createElement('li');
+    li.classList.add('list-group-item', 'd-flex', 'align-items-center', 'flex-wrap', 'mt-2');
+    
 
     const span = document.createElement('span');
     span.textContent = title;
