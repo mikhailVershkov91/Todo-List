@@ -95,5 +95,24 @@ const tasks = [
       alert('Пожалуйста, заполните пустые поля!');
       return;
     }
+
+    const task = createNewTask(titleValue, bodyValue);
+    const listItem = listItemTemplate(task);
+    listContainer.insertAdjacentElement('afterbegin', listItem);
+    form.reset();
   }
+
+  function createNewTask(title, body) {
+    const newTask = {
+      title,
+      body,
+      completed: false,
+      _id: `task-${Math.random()}`,
+    };
+
+    objOfTasks[newTask._id] = newTask;
+
+    return { ...newTask };
+  }
+
 })(tasks);
