@@ -37,9 +37,15 @@ const tasks = [
     return acc;
   }, {});
 
+  //Elements UI
   const listContainer = document.querySelector('.task-list-section .list-group');
+  const form = document.forms['addTask'];
+  const inputTitle = form.elements['title'];
+  const inputBody = form.elements['body'];
 
+  //Events
   renderAllTasks(objOfTasks);
+  form.addEventListener('submit', onFormSubmitHandler)
 
   function renderAllTasks(tasksList) {
     if(!tasksList) {
@@ -78,5 +84,16 @@ const tasks = [
     li.appendChild(article);
 
     return li;
+  }
+
+  function onFormSubmitHandler(e) {
+    e.preventDefault();
+    const titleValue = inputTitle.value;
+    const bodyValue = inputBody.value;
+    
+    if(!titleValue || !bodyValue) {
+      alert('Пожалуйста, заполните пустые поля!');
+      return;
+    }
   }
 })(tasks);
